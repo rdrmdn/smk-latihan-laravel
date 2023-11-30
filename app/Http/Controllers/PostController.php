@@ -33,6 +33,13 @@ class PostController extends Controller
         return redirect()->route('post');
     }
 
+    public function delete($id) {
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect()->route('post');
+    }
+
     public function create(Request $request) {
         $post = new Post();
         $post->title = $request->title;

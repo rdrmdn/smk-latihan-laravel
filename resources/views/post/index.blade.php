@@ -28,7 +28,14 @@
                         <h2 class="text-xl font-bold">{{$post->title}}</h2>
                         <p class="text-base">{{$post->description}}</p>
                         <p class="text-base text-right">{{$post->created_at->diffForHumans()}}</p>
-                        <a href="{{ route('post.edit', $post->id) }}">Edit</a>
+                        <div class="flex gap-x-2">
+                            <a href="{{ route('post.edit', $post->id) }}">Edit</a>
+                            <form action="{{ route('post.delete', $post->id) }}" method="POST" class="ml-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
                     </div>
                     @endforeach
                 </div>
