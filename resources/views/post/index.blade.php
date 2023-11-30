@@ -27,6 +27,7 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4 mb-6">
                         <h2 class="text-xl font-bold">{{$post->title}}</h2>
                         <p class="text-base">{{$post->description}}</p>
+                        <p class="text-base">{{$post->user->email}}</p>
                         <p class="text-base text-right underline">{{$post->created_at->diffForHumans()}}</p>
                         <div class="flex gap-x-2">
                             <a href="{{ route('post.edit', $post->id) }}">

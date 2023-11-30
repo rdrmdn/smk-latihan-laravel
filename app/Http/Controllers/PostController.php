@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -44,6 +45,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->description = $request->description;
+        $post->created_by = Auth::user()->id;
         $post->save();
 
         return redirect()->back();
