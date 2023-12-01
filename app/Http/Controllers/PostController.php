@@ -44,14 +44,16 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->save();
 
-        return redirect()->route('post');
+        return redirect()->route('post')->with('success', 'Berhasil mengubah post');
     }
 
     public function delete($id) {
         $post = Post::find($id);
         $post->delete();
 
-        return redirect()->route('post');
+        return redirect()
+        ->route('post')
+        ->with('success', 'Berhasil menghapuss post');
     }
 
     public function create(Request $request) {
@@ -67,6 +69,8 @@ class PostController extends Controller
         $post->image_url = $imageName;
         $post->save();
 
-        return redirect()->back();
+        return redirect()
+        ->back()
+        ->with('success', 'Berhasil menambahkan post');
     }
 }

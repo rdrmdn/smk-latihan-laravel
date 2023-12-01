@@ -7,6 +7,11 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if(session('success'))
+            <div class="p-4 bg-green-400 rounded mb-4">
+                <span class="text-base ">{{session('success')}}</span>
+            </div>
+            @endif
             <div class="flex">
                 <div class="mr-6" style="margin-right: 20px">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
