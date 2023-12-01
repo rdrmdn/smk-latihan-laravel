@@ -9,7 +9,7 @@ use App\Models\Post;
 class PostController extends Controller
 {
     public function view() {
-        $params = Post::latest('created_at')->get();
+        $params = Post::latest('created_at')->where('created_by', '=', Auth::user()->id)->get();
 
         return view('post.index', [
             "posts" => $params,
@@ -27,6 +27,19 @@ class PostController extends Controller
     public function update(Request $request) {
         $post = Post::find($request->id);
 
+        if ($request->image != '') {
+            if ($post->image_url != '') {
+                $old_path = public_path('images').'/'.$post->image_url;
+                if (file_exists($old_path)) {
+                    unlink($old_path);
+                }
+            }
+
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $post->image_url = $imageName;
+        }
+
         $post->title = $request->title;
         $post->description = $request->description;
         $post->save();
@@ -42,10 +55,16 @@ class PostController extends Controller
     }
 
     public function create(Request $request) {
+
+        // upload process
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
         $post = new Post();
         $post->title = $request->title;
         $post->description = $request->description;
         $post->created_by = Auth::user()->id;
+        $post->image_url = $imageName;
         $post->save();
 
         return redirect()->back();
